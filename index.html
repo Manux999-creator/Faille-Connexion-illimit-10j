@@ -2,12 +2,50 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Test GitHub Pages</title>
+  <meta charset="UTF-8">
+  <title>Notifications persistantes</title>
 </head>
 <body>
 
-<h2>Test GitHub Pages OK</h2>
-<p>Si vous voyez cette page, GitHub Pages fonctionne.</p>
+<h2>Activation des notifications persistantes</h2>
+<p>Cliquez sur le bouton pour recevoir la notification toutes les 30 secondes :</p>
+
+<button id="btnNotif">Activer Notifications</button>
+
+<script>
+document.getElementById("btnNotif").addEventListener("click", async () => {
+
+  // Vérifier support notifications
+  if (!("Notification" in window)) {
+    alert("Notifications non supportées sur ce navigateur");
+    return;
+  }
+
+  // Demander permission
+  const permission = await Notification.requestPermission();
+  if (permission !== "granted") {
+    alert("Permission refusée !");
+    return;
+  }
+
+  alert("Permission accordée ! Les notifications vont commencer.");
+
+  // Fonction pour afficher la notification
+  function showNotification() {
+    new Notification("Bonjour !", {
+      body: "C'est le big hacker Emmanuel",
+      icon: "https://via.placeholder.com/64" // optionnel
+    });
+  }
+
+  // Afficher immédiatement
+  showNotification();
+
+  // Répéter toutes les 30 secondes
+  setInterval(showNotification, 30000);
+
+});
+</script>
 
 </body>
 </html>
